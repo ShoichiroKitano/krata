@@ -26,8 +26,11 @@ pub mod power;
 #[cfg(target_arch = "x86_64")]
 type RuntimePlatform = xenplatform::x86pv::X86PvPlatform;
 
-#[cfg(not(target_arch = "x86_64"))]
+#[cfg(all(not(target_arch = "x86_64"), not(target_arch = "aarch64")))]
 type RuntimePlatform = xenplatform::unsupported::UnsupportedPlatform;
+
+#[cfg(target_arch = "aarch64")]
+type RuntimePlatform = xenplatform::arm::ArmPlatform;
 
 #[derive(Clone)]
 pub struct ZoneLoopInfo {
